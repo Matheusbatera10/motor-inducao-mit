@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+@import 'tailwindcss';
+
+@theme {
+  --color-bg: #0a2036;
+  --color-surface: #0f2f4d;
+  --color-line: #57c2d9;
+  --color-accent: #ffb648;
+  --color-text: #eaf3f8;
+  --color-muted: #86aac2;
+  --color-grid-line: #153854;
+
+  --font-display: 'Big Shoulders Display', system-ui, sans-serif;
+  --font-sans: 'IBM Plex Sans', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--color-text);
+  margin: 0;
+}
+
+code,
+.font-mono,
+.data-value {
+  font-family: var(--font-mono);
+}
+
+/* Blueprint grid mesh — background texture for hero/header sections */
+.grid-mesh {
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--color-grid-line) 50%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--color-grid-line) 50%, transparent) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+::selection {
+  background: var(--color-line);
+  color: var(--color-bg);
+}
+
+/* Slim scrollbar consistent with the blueprint aesthetic */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-surface);
+  border: 2px solid var(--color-bg);
+  border-radius: 6px;
+}
