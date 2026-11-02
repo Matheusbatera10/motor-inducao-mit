@@ -23,16 +23,16 @@ export const CATEGORIES: CategoryDef[] = [
     label: 'Categoria N',
     color: 'var(--color-accent)',
     points: [
-      { nPct: 0, tPct: 150 },
-      { nPct: 12, tPct: 130 },
-      { nPct: 75, tPct: 250 },
+      { nPct: 0, tPct: 155 },
+      { nPct: 25, tPct: 115 },
+      { nPct: 75, tPct: 230 },
       { nPct: 97, tPct: 100 },
       { nPct: 100, tPct: 0 },
     ],
     keyPoints: [
-      { name: 'Tp', nPct: 0, tPct: 150 },
-      { name: 'Tmín', nPct: 12, tPct: 130 },
-      { name: 'Tmáx', nPct: 75, tPct: 250 },
+      { name: 'Tp', nPct: 0, tPct: 155 },
+      { name: 'Tmín', nPct: 25, tPct: 115 },
+      { name: 'Tmáx', nPct: 75, tPct: 230 },
       { name: 'Tn', nPct: 97, tPct: 100 },
     ],
   },
@@ -41,16 +41,16 @@ export const CATEGORIES: CategoryDef[] = [
     label: 'Categoria H',
     color: 'var(--color-line)',
     points: [
-      { nPct: 0, tPct: 275 },
-      { nPct: 15, tPct: 190 },
-      { nPct: 70, tPct: 250 },
+      { nPct: 0, tPct: 215 },
+      { nPct: 12, tPct: 195 },
+      { nPct: 72, tPct: 255 },
       { nPct: 97, tPct: 100 },
       { nPct: 100, tPct: 0 },
     ],
     keyPoints: [
-      { name: 'Tp', nPct: 0, tPct: 275 },
-      { name: 'Tmín', nPct: 15, tPct: 190 },
-      { name: 'Tmáx', nPct: 70, tPct: 250 },
+      { name: 'Tp', nPct: 0, tPct: 215 },
+      { name: 'Tmín', nPct: 12, tPct: 195 },
+      { name: 'Tmáx', nPct: 72, tPct: 255 },
       { name: 'Tn', nPct: 97, tPct: 100 },
     ],
   },
@@ -58,18 +58,18 @@ export const CATEGORIES: CategoryDef[] = [
     key: 'D',
     label: 'Categoria D',
     color: 'var(--color-text)',
+    // Fig. 3.10: curva sem vale. O maior torque é o da própria partida.
     points: [
-      { nPct: 0, tPct: 275 },
-      { nPct: 20, tPct: 200 },
-      { nPct: 55, tPct: 230 },
-      { nPct: 88, tPct: 100 },
+      { nPct: 0, tPct: 250 },
+      { nPct: 30, tPct: 245 },
+      { nPct: 55, tPct: 228 },
+      { nPct: 75, tPct: 190 },
+      { nPct: 90, tPct: 100 },
       { nPct: 100, tPct: 0 },
     ],
     keyPoints: [
-      { name: 'Tp', nPct: 0, tPct: 275 },
-      { name: 'Tmín', nPct: 20, tPct: 200 },
-      { name: 'Tmáx', nPct: 55, tPct: 230 },
-      { name: 'Tn', nPct: 88, tPct: 100 },
+      { name: 'Tp = Tmáx', nPct: 0, tPct: 250 },
+      { name: 'Tn', nPct: 90, tPct: 100 },
     ],
   },
 ]
@@ -153,7 +153,7 @@ export function TorqueSpeedChart({ active }: { active: Set<string> }) {
             {c.keyPoints.map((k) => (
               <g key={k.name} className="group">
                 <circle cx={x(k.nPct)} cy={y(k.tPct)} r={4} fill={c.color} stroke="var(--color-bg)" strokeWidth={1.5} />
-                <text x={x(k.nPct)} y={y(k.tPct) - 8} fontSize={9.5} fill={c.color} textAnchor="middle" fontFamily="var(--font-mono)">
+                <text x={x(k.nPct) + (k.nPct === 0 ? 8 : 0)} y={y(k.tPct) - 8} fontSize={9.5} fill={c.color} textAnchor={k.nPct === 0 ? 'start' : 'middle'} fontFamily="var(--font-mono)">
                   {k.name}
                 </text>
               </g>

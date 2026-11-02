@@ -38,16 +38,19 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-h1,
-h2,
-h3,
-h4 {
-  font-family: var(--font-display);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
-  color: var(--color-text);
-  margin: 0;
+/* Em @layer base para que as classes utilitárias possam sobrescrever. */
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    color: var(--color-text);
+    margin: 0;
+  }
 }
 
 code,
@@ -67,6 +70,30 @@ code,
 ::selection {
   background: var(--color-line);
   color: var(--color-bg);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Impressão da aba Fórmulas: fundo branco, texto preto e sem a navegação. */
+@media print {
+  :root {
+    color-scheme: light;
+    --color-bg: #ffffff;
+    --color-surface: #ffffff;
+    --color-text: #000000;
+    --color-muted: #333333;
+    --color-accent: #000000;
+    --color-line: #000000;
+    --color-grid-line: #ffffff;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .formula-card {
+    break-inside: avoid;
+  }
 }
 
 /* Slim scrollbar consistent with the blueprint aesthetic */

@@ -141,6 +141,40 @@ export const regimesServico: { codigo: string; nome: string; descricao: string }
   { codigo: 'S10', nome: 'Cargas constantes distintas', descricao: 'Até 4 níveis de carga, cada um mantido até equilíbrio térmico' },
 ]
 
+/**
+ * Explicação de cada campo da placa e valores das duas placas WEG da Tabela 3.38.
+ * '—' = o campo não aparece legível nessa placa da apostila.
+ */
+export const placaDetalhes: Record<number, { oQueE: string; prova: string; motor1: string; motor100: string }> = {
+  1: { oQueE: 'Número que identifica o modelo e a especificação do motor junto ao fabricante.', prova: 'Serve para pedir peça ou motor igual. Não entra em cálculo.', motor1: '11310148', motor100: '11094316' },
+  2: { oQueE: 'Quantidade de fases da alimentação. “3~” significa trifásico em corrente alternada.', prova: 'O √3 da fórmula da corrente vem de ser trifásico.', motor1: '3~', motor100: '3~' },
+  3: { oQueE: 'Tensões de linha em que o motor pode operar, conforme a ligação das bobinas.', prova: '220/380 V: Δ em 220 V e Y em 380 V, com bobina de 220 V. Menor tensão, maior corrente.', motor1: '220/380 V', motor100: '220/380/440 V' },
+  4: { oQueE: 'A regularidade de carga para a qual o motor foi especificado (S1 a S10).', prova: 'S1 é regime contínuo: carga constante até o equilíbrio térmico.', motor1: 'S1', motor100: 'S1' },
+  5: { oQueE: 'Rendimento η: razão entre a potência de saída no eixo e a potência elétrica de entrada.', prova: 'Sempre abaixo de 100%. Entra na fórmula de In e no cálculo de P1 = Peixo/η.', motor1: '82,6%', motor100: '95,5%' },
+  6: { oQueE: 'Tamanho padronizado da carcaça.', prova: 'Define dimensões de fixação. Não entra em cálculo.', motor1: '80', motor100: '250S/M' },
+  7: { oQueE: 'Proteção do invólucro: 1º algarismo contra sólidos e contato, 2º contra água.', prova: 'IP55: protegido contra acúmulo de poeira nociva e jatos de água.', motor1: 'IP55', motor100: 'IP55W' },
+  8: { oQueE: 'Classe térmica do sistema de isolamento: A 105°C, E 120°C, B 130°C, F 155°C, H 180°C.', prova: 'A classe é o limite do ponto mais quente, não a temperatura de trabalho.', motor1: 'F', motor100: 'F' },
+  9: { oQueE: 'Elevação de temperatura Δt do enrolamento acima do ambiente.', prova: 'A classe F admite Δt de 105°C. Com 80 K, as duas placas sobram em relação ao limite da classe.', motor1: 'ΔT 80 K', motor100: 'ΔT 80 K' },
+  10: { oQueE: 'Frequência nominal da rede.', prova: 'Com a rotação, permite achar ns e o número de polos.', motor1: '60 Hz', motor100: '60 Hz' },
+  11: { oQueE: 'Potência mecânica nominal entregue no eixo, em kW e cv.', prova: 'É potência de saída, não a potência consumida da rede.', motor1: '0,75 kW (1 cv)', motor100: '75 kW (100 cv)' },
+  12: { oQueE: 'Rotação real do rotor a plena carga. É sempre menor que a síncrona.', prova: 'É o dado para achar polos, ns, s e f2.', motor1: '1725 rpm', motor100: '1780 rpm' },
+  13: { oQueE: 'Corrente de linha a plena carga, em cada tensão da placa.', prova: 'A ordem acompanha as tensões: 2,87 A em 220 V e 1,66 A em 380 V.', motor1: '2,87 / 1,66 A', motor100: '236 / 137 / 118 A' },
+  14: { oQueE: 'Fator de potência cosφ a plena carga.', prova: 'Entra na fórmula de In. O motor absorve reativo para magnetizar por causa do entreferro.', motor1: '0,83', motor100: '0,87' },
+  15: { oQueE: 'Temperatura máxima do meio refrigerante para a qual o motor foi especificado.', prova: 'Condição usual da NBR 17094: até 40°C.', motor1: '40°C', motor100: '40°C' },
+  16: { oQueE: 'Fator de serviço: sobrecarga permissível contínua.', prova: 'FS 1,15 suporta 15% acima da nominal continuamente. Não é a capacidade de pico, que é o Tmáx.', motor1: '1,15', motor100: '1,25' },
+  17: { oQueE: 'Altitude máxima de instalação sem redução de potência.', prova: 'Condição usual: até 1000 m. Acima disso o ar rarefeito refrigera menos.', motor1: '1000 m', motor100: '1000 m' },
+  18: { oQueE: 'Massa do motor.', prova: 'Dado de transporte e instalação. Não entra em cálculo.', motor1: '—', motor100: '526 kg' },
+  19: { oQueE: 'Rolamento dianteiro e a quantidade de graxa.', prova: 'Dado de manutenção.', motor1: '6204-ZZ', motor100: '6314-C3 (27 g)' },
+  20: { oQueE: 'Rolamento traseiro e a quantidade de graxa.', prova: 'Dado de manutenção.', motor1: '6203-ZZ', motor100: '6314-C3 (27 g)' },
+  21: { oQueE: 'Tipo de graxa usada nos rolamentos.', prova: 'Dado de manutenção.', motor1: 'Polyrex EM (Esso)', motor100: 'Polyrex EM (Esso)' },
+  22: { oQueE: 'Esquema de ligação dos terminais para cada tensão.', prova: 'Mostra como fechar Δ ou Y. Na placa de 100 cv, Y aparece só para partida.', motor1: 'Δ 220 V · Y 380 V', motor100: 'ΔΔ 220 V · YY 380 V · Δ 440 V' },
+  23: { oQueE: 'Intervalo de relubrificação, em horas.', prova: 'Dado de manutenção.', motor1: '—', motor100: '12000 h' },
+  24: { oQueE: 'Certificações do produto.', prova: 'Atestam conformidade. Não entram em cálculo.', motor1: 'CE, Inmetro, Procel', motor100: 'CE, Inmetro, Procel' },
+  25: { oQueE: 'Relação Ip/In: quantas vezes a corrente de partida é maior que a nominal.', prova: 'Ip = (Ip/In) · In. No motor de 100 cv em 220 V: 7,5 · 236 = 1770 A.', motor1: '7,3', motor100: '7,5' },
+  26: { oQueE: 'Categoria de conjugado: N, H ou D.', prova: 'N: torque e corrente de partida normais e baixo escorregamento. É a maioria do mercado.', motor1: 'N', motor100: 'N' },
+  27: { oQueE: 'Corrente quando o motor opera no fator de serviço.', prova: 'I_FS = FS · In. No motor de 100 cv em 220 V: 1,25 · 236 = 295 A.', motor1: '—', motor100: '295 / 171 / 148 A' },
+}
+
 /** Tabela 3.38 — Campos da placa de identificação (nameplate) */
 export const placaIdentificacaoCampos: { n: number; campo: string }[] = [
   { n: 1, campo: 'Código do motor' },

@@ -36,6 +36,11 @@ export function ED_S4(tN: number, tD: number, tR: number): number {
   return ((tN + tD) / (tN + tD + tR)) * 100
 }
 
+/** Fator de duração do ciclo — regime S5 (%) */
+export function ED_S5(tN: number, tD: number, tF: number, tR: number): number {
+  return ((tN + tD + tF) / (tN + tD + tF + tR)) * 100
+}
+
 /** Fator de duração do ciclo — regime S6 (%) */
 export function ED_S6(tN: number, tV: number): number {
   return (tN / (tN + tV)) * 100

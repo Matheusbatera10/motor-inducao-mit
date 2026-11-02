@@ -2,7 +2,9 @@
 // magnetização) para o torque em função do escorregamento — usado para mostrar
 // como tensão, frequência, polos e resistência do rotor mudam a curva.
 //
-// T(s) ∝ V² · (Rr/s) / [(Rs + Rr/s)² + X²]      (equação de Kloss / circuito aproximado)
+// T(s) = (3 / ωs) · V² · (Rr/s) / [(Rs + Rr/s)² + X²],   com ωs = 4π·f / p
+//
+// O termo 1/ωs faz o torque subir com o nº de polos e cair com a frequência.
 
 export interface MotorParams {
   V: number // pu da tensão nominal (1.0 = nominal)
@@ -18,11 +20,14 @@ export interface ParamTorquePoint {
   s: number
 }
 
+// Valores escolhidos para a curva de referência ficar dentro do que a apostila
+// descreve: Tmáx ≈ 243% e Tp ≈ 130% do torque nominal, com s nominal de 5%.
 const RS_BASE = 0.03
-const RR_BASE = 0.045
+const RR_BASE = 0.04
 const X_BASE = 0.15
 const FREQ_BASE = 60
-const S_NOMINAL = 0.04
+const POLES_BASE = 4
+const S_NOMINAL = 0.05
 
 export const BASELINE_PARAMS: MotorParams = { V: 1, freq: 60, poles: 4, Rr: 1, Rs: 1 }
 
@@ -31,7 +36,8 @@ function rawTorque(s: number, p: MotorParams): number {
   const Rr = RR_BASE * p.Rr
   const X = X_BASE * (p.freq / FREQ_BASE)
   const term = Rr / s
-  return (p.V ** 2 * term) / ((Rs + term) ** 2 + X ** 2)
+  const fatorOmegaS = (p.poles / POLES_BASE) * (FREQ_BASE / p.freq)
+  return (fatorOmegaS * p.V ** 2 * term) / ((Rs + term) ** 2 + X ** 2)
 }
 
 const T_REF = rawTorque(S_NOMINAL, BASELINE_PARAMS)
@@ -52,6 +58,7 @@ export function sampleParametricCurve(p: MotorParams): ParamTorquePoint[] {
   return out
 }
 
+/** Escorregamento do pico matemático da curva. Pode passar de 1 com Rr muito alta. */
 export function slipAtMaxTorque(p: MotorParams): number {
   const Rs = RS_BASE * p.Rs
   const Rr = RR_BASE * p.Rr

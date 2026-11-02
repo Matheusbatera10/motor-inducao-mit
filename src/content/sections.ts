@@ -143,7 +143,7 @@ export const sections: SectionDef[] = [
       },
       {
         type: 'p',
-        text: 'Motor de 4 polos, 60Hz, s=5% a plena carga: tensão induzida no rotor na partida = 60Hz; a plena carga = 3Hz.',
+        text: 'Motor de 4 polos, 60Hz, s=5% a plena carga: frequência induzida no rotor na partida = 60Hz; a plena carga = 3Hz. (A apostila escreve “tensão induzida”, mas as respostas estão em Hz: o que se calcula é a frequência.)',
       },
     ],
   },
@@ -244,7 +244,7 @@ export const sections: SectionDef[] = [
       },
       {
         type: 'note',
-        text: 'Os valores completos (Cp = torque com rotor bloqueado, Cmín = torque mínimo de partida, Cmáx = torque máximo, todos em pu do torque nominal) estão nas Tabelas 3.1 e 3.2, disponíveis nesta página como consulta.',
+        text: 'Os valores completos (Cp = torque com rotor bloqueado, Cmín = torque mínimo de partida, Cmáx = torque máximo, todos em pu do torque nominal) estão nas Tabelas 3.1 e 3.2, disponíveis nesta página como consulta. Na prova, responda como na apostila: H e D com corrente de partida baixa. Alguns catálogos de fabricante descrevem essa corrente como “normal”.',
       },
     ],
   },
@@ -274,7 +274,11 @@ export const sections: SectionDef[] = [
         type: 'formula',
         label: 'Fator de duração do ciclo (ED) — exemplo S3',
         expr: 'ED = tN/(tN+tR) · 100%',
-        note: 'Variações específicas para S4-S8 somam tD, tF, tV conforme o regime.',
+        note: 'Variações específicas para S4-S8 somam tD, tF, tV conforme o regime. Todas estão na aba Fórmulas.',
+      },
+      {
+        type: 'note',
+        text: 'S7 tem ED = 100%, porque não existe período de repouso. S1 alcança o equilíbrio térmico, S2 não alcança e depois repousa até igualar a temperatura com o meio refrigerante. S10 tem no máximo 4 valores distintos de carga, cada um até o equilíbrio térmico.',
       },
     ],
   },
@@ -303,7 +307,13 @@ export const sections: SectionDef[] = [
       { type: 'subheading', text: 'Classes de isolamento (NBR 17094)' },
       {
         type: 'note',
-        text: 'Classes B e F são as mais usadas em motores normais. Um aumento de 8-10°C na temperatura de isolação reduz a vida útil pela metade.',
+        text: 'Classes B e F são as mais usadas em motores normais. Um aumento de 8-10°C na temperatura de isolação reduz a vida útil pela metade. Vida útil aqui é o envelhecimento gradual do isolante, que resseca até não suportar a tensão e causar curto-circuito, e não a queima imediata.',
+      },
+      {
+        type: 'formula',
+        label: 'Temperatura do ponto mais quente',
+        expr: 'T total = T ambiente + Δt + (ponto mais quente − média)',
+        note: 'Ex.: classe F = 40 + 105 + 10 = 155°C. Atenção: o texto da apostila cita diferença de 15°C para a classe F, mas a Tabela 3.3 usa 10°C, e é a tabela que fecha os 155°C.',
       },
       { type: 'subheading', text: 'Proteção térmica' },
       {
@@ -312,8 +322,14 @@ export const sections: SectionDef[] = [
           'Termorresistores PT-100: resistência varia linearmente com a temperatura (platina/níquel/cobre), permite acompanhamento contínuo via display; alto custo.',
           'Termistores PTC/NTC: semicondutores que mudam resistência bruscamente numa temperatura definida; o PTC é o mais usado em motores (interrompe corrente, aciona relé); tamanho reduzido, resposta rápida, mas sem leitura contínua.',
           'Termostatos bimetálicos: contatos que abrem ao atingir a temperatura de atuação e fecham ao esfriar; instalados nas cabeças de bobina, 1 ou 2 por fase.',
-          'Protetores fenólicos: bimetálico com resistência interna, usados principalmente em monofásicos, contra sobrecarga/rotor travado/queda de tensão; religamento automático ou manual.',
+          'Protetores fenólicos: bimetálico com resistência interna, usados principalmente em monofásicos, contra sobrecarga/rotor travado/queda de tensão; religamento automático ou manual. Em trifásicos, apenas com ligação Y.',
         ],
+      },
+      {
+        type: 'formula',
+        label: 'Temperatura pelo PT-100',
+        expr: 't(°C) = (r − 100) / 0,385',
+        note: 'r = resistência medida em ohms. Ex.: r = 138,5 Ω → t = 100°C.',
       },
     ],
   },
@@ -329,7 +345,13 @@ export const sections: SectionDef[] = [
       },
       {
         type: 'p',
-        text: 'Altitude: acima de 1000m o ar rarefeito reduz a capacidade de refrigeração → exige redução de perdas/potência. Soluções: isolamento de classe superior; motor com fator de serviço >1,0; ou reduzir a elevação de temperatura em 1% a cada 100m acima de 1000m (arredondado para cima).',
+        text: 'Altitude: acima de 1000m o ar rarefeito reduz a capacidade de refrigeração → exige redução de perdas/potência. Soluções: isolamento de classe superior; motor com fator de serviço >1,0; ou reduzir a elevação de temperatura em 1% a cada 100m acima de 1000m (arredondando a redução para o °C inteiro imediatamente superior).',
+      },
+      {
+        type: 'formula',
+        label: 'Exemplo da apostila: classe B, 1500 m',
+        expr: 'Δt = 80 − (0,05 · 80) = 76°C',
+        note: '500 m acima de 1000 m = redução de 5%.',
       },
       {
         type: 'p',
@@ -384,12 +406,22 @@ export const sections: SectionDef[] = [
         text: 'Permite 4 tensões de linha diferentes — Triângulo Paralelo, Estrela Paralelo, Triângulo Série, Estrela Série (proporcionais a 1x, √3x, 2x e 2√3x a tensão de bobina).',
       },
       { type: 'formula', label: 'Corrente nominal', expr: 'In = Pn(cv)·736 / (√3·UL·cosφ·η)  [A]' },
+      { type: 'subheading', text: 'Identificação das bobinas (6 terminais)' },
+      {
+        type: 'list',
+        items: [
+          'Continuidade: com o ohmímetro, encontre os pares de terminais de cada bobina e numere 1-4, 2-5 e 3-6.',
+          'Polaridade das bobinas 1 e 2: ligue as duas em série e coloque a lâmpada (12 V) ou um voltímetro nos terminais 3-6. Se acender, a bobina 1 está invertida: troque 1 por 4. Se ficar apagada, está correta.',
+          'Polaridade da bobina 3: ligue as bobinas 2 e 3 em série e coloque a lâmpada nos terminais 1-4. Se acender, troque 3 por 6 e teste de novo.',
+        ],
+      },
       { type: 'subheading', text: 'Motores de duas velocidades' },
       {
         type: 'list',
         items: [
           'Enrolamentos separados: um enrolamento por número de polos desejado — mais flexível, porém motor maior/mais caro.',
-          'Comutação de polos (ligação Dahlander): relação de polos 1:2 (relação de rotação 1:2), obtida invertendo o sentido da corrente em parte do enrolamento. Duas variantes: conjugado (torque) constante (ligação D/YY, relação de potência ≈0,63:1) e potência constante (ligação YY/D, relação de conjugado 1:2). Relações comuns de polos: 2/4, 2/6, 2/8, 4/6, 4/8, 6/8 — velocidades síncronas típicas (60Hz): 3600, 1800, 1200, 900 rpm.',
+          'Comutação de polos (ligação Dahlander): relação de polos 1:2 (relação de rotação 1:2), obtida invertendo o sentido da corrente em parte do enrolamento. Exemplos 1:2: IV/II e VIII/IV polos. Duas variantes: conjugado (torque) constante (ligação D/YY, relação de potência ≈0,63:1) e potência constante (ligação YY/D, relação de conjugado 1:2).',
+          'Mudança de número de polos em geral: a apostila lista as relações 2/4, 2/6, 2/8, 4/6, 4/8 e 6/8. Só 2/4 e 4/8 são 1:2. As demais não cabem na Dahlander clássica. Velocidades síncronas em 60Hz: 3600, 1800, 1200 e 900 rpm para 2, 4, 6 e 8 polos.',
         ],
       },
       {
@@ -402,11 +434,11 @@ export const sections: SectionDef[] = [
     slug: 'placa-identificacao',
     numero: '3.17',
     titulo: 'Placa de Identificação',
-    resumo: '27 campos definidos pela NBR 17094.',
+    resumo: 'Como ler cada dado da placa e o que calcular com ele.',
     blocks: [
       {
         type: 'p',
-        text: 'A NBR 17094 define 27 campos obrigatórios na placa de identificação do motor — clique nos números no diagrama abaixo para ver o significado de cada um.',
+        text: 'A placa contém as características nominais e de desempenho definidas pela NBR 17094. A apostila numera 27 campos. Abaixo estão as duas placas WEG da apostila: escolha um motor, clique num número e veja o valor, o significado e como aquilo pode cair na prova.',
       },
     ],
   },

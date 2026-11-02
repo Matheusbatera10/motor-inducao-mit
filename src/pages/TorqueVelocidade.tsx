@@ -32,7 +32,8 @@ export function TorqueVelocidade() {
       <div className="mt-8 border border-line/30 bg-surface rounded p-5 grid-mesh">
         <h3 className="text-lg mb-1">Curvas Normativas por Categoria</h3>
         <p className="text-muted text-xs font-mono mb-3">
-          Formato de curva típico de cada categoria (NBR 17094), com os pontos Tp, Tmín, Tmáx e Tn.
+          Curvas aproximadas a partir da Figura 3.10 da apostila, com os pontos Tp, Tmín, Tmáx e Tn. Na categoria D não há
+          vale: o torque só cai desde a partida.
         </p>
         <CategorySelector active={active} onToggle={toggle} />
         <div className="mt-4">
